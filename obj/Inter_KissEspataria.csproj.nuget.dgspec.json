@@ -1,0 +1,69 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/luis/Documentos/Inter_KissEspataria/Inter_KissEspataria.csproj": {}
+  },
+  "projects": {
+    "/home/luis/Documentos/Inter_KissEspataria/Inter_KissEspataria.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/luis/Documentos/Inter_KissEspataria/Inter_KissEspataria.csproj",
+        "projectName": "Inter_KissEspataria",
+        "projectPath": "/home/luis/Documentos/Inter_KissEspataria/Inter_KissEspataria.csproj",
+        "packagesPath": "/home/luis/.nuget/packages/",
+        "outputPath": "/home/luis/Documentos/Inter_KissEspataria/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/luis/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "system.data.sqlclient": {
+              "target": "Package",
+              "version": "[4.8.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.202/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
