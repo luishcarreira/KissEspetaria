@@ -13,5 +13,7 @@ namespace Inter_KissEspataria.Models
         [DataType(DataType.Password)]
         [MinLength(6)]
         public String Senha { get; set; }
+
+        public decimal Salario { get; set; }
     }
 }
