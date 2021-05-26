@@ -22,7 +22,7 @@ CREATE TABLE PessoasAtendente
     Senha VARCHAR(16) NOT NULL,
     Salario MONEY NOT NULL,
 
-        PRIMARY KEY (AtendenteId),
+    PRIMARY KEY (AtendenteId),
     FOREIGN KEY (AtendenteId) REFERENCES Pessoas(PessoaId)
 )
 GO
@@ -77,3 +77,66 @@ CREATE TABLE ProdutoComandaItem
 )
 GO
 
+
+--PROCEDURE ATENDENTE
+CREATE PROC sp_atendente_create
+    @Nome VARCHAR(50),
+    @CPF VARCHAR(11),
+    @Telefone VARCHAR(13),
+    @Login VARCHAR(10),
+    @Senha VARCHAR(16),
+    @Salario MONEY
+AS
+INSERT INTO Pessoas
+VALUES
+    (@Nome, @CPF, @Telefone)
+
+INSERT INTO PessoasAtendente
+VALUES
+    (@@IDENTITY, @Login, @Senha, @Salario)
+GO
+
+exec sp_atendente_create 'Luis', '46093823857', '190', 'lhenrique', '1234', 1200
+GO
+
+SELECT P.PessoaId, P.Nome, P.CPF, P.Telefone, PA.[Login], PA.Senha, PA.Salario
+FROM Pessoas as P
+    INNER JOIN PessoasAtendente as PA
+    on P.PessoaId = PA.AtendenteId
+GO
+
+CREATE PROC sp_atendente_update
+    @PessoaId INT,
+    @Nome VARCHAR(50),
+    @CPF VARCHAR(11),
+    @Telefone VARCHAR(13),
+    @Login VARCHAR(10),
+    @Senha VARCHAR(16),
+    @Salario MONEY
+AS
+UPDATE Pessoas SET
+    Nome = @Nome,
+    CPF = @CPF,
+    Telefone = @Telefone
+    WHERE PessoaId = @PessoaId
+
+DECLARE @AtendenteId AS INT = @PessoaId
+
+UPDATE PessoasAtendente SET
+    [Login] = @Login,
+    Senha = @Senha,
+    Salario = @Salario
+    WHERE AtendenteId = @AtendenteId 
+GO
+
+exec sp_atendente_update 1, 'Luis Henrique', '460938', '190-190', 'ladmin', '123456', 3000
+GO
+
+SELECT *
+FROM PessoasAtendente
+
+SELECT P.PessoaId, P.Nome, P.CPF, P.Telefone, PA.[Login], PA.Senha, PA.Salario
+FROM Pessoas as P
+    INNER JOIN PessoasAtendente as PA
+    on P.PessoaId = PA.AtendenteId
+GO

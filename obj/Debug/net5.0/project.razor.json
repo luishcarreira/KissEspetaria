@@ -15644,6 +15644,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/Atendente/Create.cshtml",
+      "TargetPath": "Views\\Atendente\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/Shared/_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"

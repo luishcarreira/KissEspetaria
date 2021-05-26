@@ -13,7 +13,7 @@ namespace Inter_KissEspataria.Data
             {
                 //string de conexão como banco de dados
                 string strConexao = @"Data Souce = localhost;
-                            Initial Catalog = BDEcommerce;
+                            Initial Catalog = KissEspetariaBD;
                             User=SA; Password=Luis10072000";
 
                 connectionDB = new SqlConnection(strConexao);

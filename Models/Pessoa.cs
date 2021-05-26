@@ -11,7 +11,7 @@ namespace Inter_KissEspataria.Models
         [Required(ErrorMessage = "Campo 'Nome' obrigatório!")]
         [MinLength(3)]
         public String Nome { get; set; }
-
+        public String CPF { get; set; }
         public String Telefone { get; set; }
     }
 }
