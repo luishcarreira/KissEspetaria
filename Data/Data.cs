@@ -12,12 +12,12 @@ namespace Inter_KissEspataria.Data
             try
             {
                 //string de conexão como banco de dados
-                string strConexao = @"Data Souce = localhost;
+                string strConexao = @"Data Source = localhost;
                             Initial Catalog = KissEspetariaBD;
                             User=SA; Password=Luis10072000";
 
                 connectionDB = new SqlConnection(strConexao);
-                //connectionDB.Open;
+                connectionDB.Open();
             }
             catch (Exception ex)
             {

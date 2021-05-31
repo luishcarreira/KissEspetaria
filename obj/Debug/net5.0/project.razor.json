@@ -15639,18 +15639,23 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/PessoaAtendente/Create.cshtml",
+      "TargetPath": "Views\\PessoaAtendente\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/Home/Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/Atendente/Create.cshtml",
-      "TargetPath": "Views\\Atendente\\Create.cshtml",
+      "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/Shared/_Layout.cshtml",
+      "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/Shared/_Layout.cshtml",
-      "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/PessoaAtendente/Index.cshtml",
+      "TargetPath": "Views\\PessoaAtendente\\Index.cshtml",
       "FileKind": "mvc"
     },
     {

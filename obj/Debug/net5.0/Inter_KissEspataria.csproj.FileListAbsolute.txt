@@ -44,3 +44,5 @@
 /home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/ref/Inter_KissEspataria.dll
 /home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Inter_KissEspataria.pdb
 /home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Inter_KissEspataria.genruntimeconfig.cache
+/home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/PessoaAtendente/Create.cshtml.g.cs
+/home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/PessoaAtendente/Index.cshtml.g.cs

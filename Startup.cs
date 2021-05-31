@@ -23,6 +23,17 @@ namespace Inter_KissEspataria
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(24);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddHttpContextAccessor();
+
             services.AddControllersWithViews();
         }
 
@@ -50,7 +61,7 @@ namespace Inter_KissEspataria
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=PessoaAtendente}/{action=Index}/{id?}");
             });
         }
     }
