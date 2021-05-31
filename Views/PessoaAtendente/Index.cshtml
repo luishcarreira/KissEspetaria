@@ -1,28 +1,30 @@
-﻿@model PessoaAtendente
+﻿@model List<PessoaAtendente>
 
 <br />
-@if (@Model == null)
+@if (Model == null)
 {
     <h3>@ViewBag.Mensagem</h3>
 }
 else
 {
-    <h3>@ViewBag.Mensagem @Model.Nome</h3>
     <table class="table table-hover">
-    <tr>
-        <td>@Model.PessoaId</td>
-        <td>@Model.Nome</td>
-        <td>@Model.CPF</td>
-        <td>@Model.Login</td>
-        <td>@Model.Senha</td>
-        <td>@Model.Salario</td>
-        <td>
-            <a class="btn btn-sm btn-danger" href="/cliente/delete/@Model.PessoaId">Apagar</a>
-            <a class="btn btn-sm btn-warning" href="/cliente/update">Editar</a>
-            <a class="btn btn-sm btn-info" href="/item/meus_pedidos">Meus Pedidos</a>
-        </td>
+    @foreach (var atendente in Model)
+        {
+            <tr>
+                <td>@atendente.PessoaId</td>
+                <td>@atendente.Nome</td>
+                <td>@atendente.CPF</td>
+                <td>@atendente.Login</td>
+                <td>@atendente.Senha</td>
+                <td>@atendente.Salario</td>
+                <td>
+                    <a class="btn btn-sm btn-danger" href="/cliente/delete/@atendente.PessoaId">Apagar</a>
+                    <a class="btn btn-sm btn-warning" href="/cliente/update">Editar</a>
+                    <a class="btn btn-sm btn-info" href="/item/meus_pedidos">Meus Pedidos</a>
+                </td>
 
-    </tr>
-</table>
+            </tr>
+        }
+    </table>
 }
-<a class="btn btn-primary" href="/cliente/create">Adicionar</a>
+<a class="btn btn-primary" href="/pessoaatendente/create">Adicionar</a>

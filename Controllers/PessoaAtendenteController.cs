@@ -1,6 +1,8 @@
 using System;
+using System.Text.Json;
 using Inter_KissEspataria.Data;
 using Inter_KissEspataria.Models;
+using Inter_KissEspataria.Models.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +10,10 @@ namespace Inter_KissEspataria.Controllers
 {
     public class PessoaAtendenteController : Controller
     {
-        public IActionResult Index(PessoaAtendente novoAtendente)
+        public IActionResult Index()
         {
-            return View(novoAtendente);
+            using (var data = new PessoaAtendenteData())
+                return View(data.Read());
         }
 
         [HttpGet]
@@ -52,6 +55,34 @@ namespace Inter_KissEspataria.Controllers
                 data.Create(novoAtendente);
 
             return RedirectToAction("Index", novoAtendente);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View(new PessoaAtendenteViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult Login(PessoaAtendenteViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            using (var data = new PessoaAtendenteData())
+            {
+                var user = data.Read(model);
+
+                if (user == null)
+                {
+                    ViewBag.Message = "Email e/ou senha incorretos!";
+                    return View(model);
+                }
+
+                HttpContext.Session.SetString("user", JsonSerializer.Serialize<PessoaAtendente>(user));
+
+                return RedirectToAction("Index", "Produto");
+            }
         }
     }
 }

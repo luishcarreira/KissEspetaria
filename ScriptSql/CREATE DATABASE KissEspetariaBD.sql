@@ -140,3 +140,23 @@ FROM Pessoas as P
     INNER JOIN PessoasAtendente as PA
     on P.PessoaId = PA.AtendenteId
 GO
+
+
+--VIEW ATENDENTE
+CREATE VIEW vw_atendente
+AS
+    SELECT P.PessoaId AS Codigo,
+        P.Nome AS Nome,
+        P.CPF,
+        P.Telefone,
+        PA.[Login],
+        PA.Salario AS Salario
+    FROM Pessoas as P
+        INNER JOIN PessoasAtendente as PA
+        on P.PessoaId = PA.AtendenteId
+GO
+
+DROP VIEW vw_atendente
+
+SELECT *
+FROM vw_atendente

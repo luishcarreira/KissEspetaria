@@ -1,0 +1,17 @@
+﻿@model PessoaAtendenteViewModel
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+
+        <div class="brand_logo_container">
+            <img src="~/images/logo.png" class="brand_logo" alt="Logo">
+        </div>
+
+
+        <form asp-controller="PessoaAtendente" asp-action="Login" method="post">
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+            <input type="submit" class="fadeIn fourth" value="Log In">
+        </form>
+    </div>
+</div>

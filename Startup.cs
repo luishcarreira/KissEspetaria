@@ -57,11 +57,13 @@ namespace Inter_KissEspataria
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=PessoaAtendente}/{action=Index}/{id?}");
+                    pattern: "{controller=PessoaAtendente}/{action=Login}/{id?}");
             });
         }
     }

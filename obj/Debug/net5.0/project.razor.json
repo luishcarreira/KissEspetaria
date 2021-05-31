@@ -15634,6 +15634,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/PessoaAtendente/Login.cshtml",
+      "TargetPath": "Views\\PessoaAtendente\\Login.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/Shared/_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"

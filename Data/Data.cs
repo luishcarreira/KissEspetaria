@@ -27,7 +27,7 @@ namespace Inter_KissEspataria.Data
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            connectionDB.Close();
         }
     }
 }
