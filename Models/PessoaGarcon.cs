@@ -10,5 +10,7 @@ namespace Inter_KissEspataria.Models
         public Decimal valorDia { get; set; }
 
         public Decimal Comissao { get; set; }
+
+        public Boolean Ativo { get; set; }
     }
 }

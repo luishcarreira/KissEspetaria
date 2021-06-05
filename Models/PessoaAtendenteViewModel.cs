@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Inter_KissEspataria.Models.ViewModel
+namespace Inter_KissEspataria.Models
 {
-    public class PessoaAtendenteViewModel : Pessoa
+    public class PessoaAtendenteViewModel
     {
         [Required(ErrorMessage = "Campo 'Login' obrigatório!")]
         public String Login { get; set; }

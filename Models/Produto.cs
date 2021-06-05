@@ -9,7 +9,6 @@ namespace Inter_KissEspataria.Models
         [Display(Name = "Descrição")]
         [Required(ErrorMessage = "Campo 'Descrição' obrigatório!")]
         public string Descricao { get; set; }
-        public char Status { get; set; }
 
         [Display(Name = "Quantidade em estoque")]
         [Required(ErrorMessage = "Campo 'Quantidade em estoque' obrigatório!")]

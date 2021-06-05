@@ -2,7 +2,6 @@ using System;
 using System.Text.Json;
 using Inter_KissEspataria.Data;
 using Inter_KissEspataria.Models;
-using Inter_KissEspataria.Models.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +30,7 @@ namespace Inter_KissEspataria.Controllers
             string login = atendente["Login"];
             string senha = atendente["Senha"];
             double salario = Convert.ToDouble(atendente["Salario"]);
+            bool admin = Convert.ToBoolean(atendente["Admin"]);
 
             if (nome.Length < 6)
             {
@@ -49,12 +49,78 @@ namespace Inter_KissEspataria.Controllers
             novoAtendente.Login = atendente["Login"];
             novoAtendente.Senha = atendente["Senha"];
             novoAtendente.Salario = Convert.ToDecimal(atendente["Salario"]);
+            novoAtendente.Admin = atendente["Admin"];
 
 
             using (var data = new PessoaAtendenteData())
                 data.Create(novoAtendente);
 
             return RedirectToAction("Index", novoAtendente);
+        }
+
+        /*[HttpPost]
+        public IActionResult Read(IFormCollection atendente)
+        {
+            string nome = atendente["Nome"];
+            string login = atendente["Login"];
+            string senha = atendente["Senha"];
+
+            if(!login.Equals(" "))
+            {
+                var atend = new PessoaAtendente();
+
+                cli.Nome = cliente["Nome"];
+                cli.Email = cliente["Email"];
+                cli.Senha = cliente["Senha"];
+
+                Cliente c = new Cliente();
+
+                using (var data = new ClienteData())
+                    c = data.Read(cli.Email);
+
+                if(c.Senha == cli.Senha)
+                {
+                    ViewBag.Mensagem = "Olá";
+                    return View("Index", c);
+                }
+                else
+                {
+                    ViewBag.Mensagem = "Usuário ou senha inválidos";
+                    return View("Index", null);
+                }
+
+            }
+
+            return View("Create");
+        }*/
+
+        public IActionResult Delete(int id)
+        {
+            using (var data = new PessoaAtendenteData())
+                data.Delete(id);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            using (var data = new PessoaAtendenteData())
+                return View(data.Read(id));
+        }
+
+        [HttpPost]
+        public IActionResult Update(int id, PessoaAtendente atendente)
+        {
+            atendente.PessoaId = id;
+
+            if (!ModelState.IsValid)
+                return View(atendente);
+
+            using (var data = new PessoaAtendenteData())
+                data.Update(atendente);
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -75,13 +141,13 @@ namespace Inter_KissEspataria.Controllers
 
                 if (user == null)
                 {
-                    ViewBag.Message = "Email e/ou senha incorretos!";
+                    ViewBag.Message = "Login e/ou senha incorretos!";
                     return View(model);
                 }
 
                 HttpContext.Session.SetString("user", JsonSerializer.Serialize<PessoaAtendente>(user));
 
-                return RedirectToAction("Index", "Produto");
+                return RedirectToAction("Index", "PessoaAtendente");
             }
         }
     }

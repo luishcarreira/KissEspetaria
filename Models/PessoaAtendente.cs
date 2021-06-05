@@ -15,5 +15,7 @@ namespace Inter_KissEspataria.Models
         public String Senha { get; set; }
 
         public decimal Salario { get; set; }
+
+        public String Admin { get; set; }
     }
 }
