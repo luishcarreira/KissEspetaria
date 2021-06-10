@@ -11,6 +11,6 @@ namespace Inter_KissEspataria.Models
 
         public Decimal Comissao { get; set; }
 
-        public Boolean Ativo { get; set; }
+        public String Ativo { get; set; }
     }
 }

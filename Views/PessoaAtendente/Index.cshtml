@@ -1,4 +1,7 @@
-﻿@model List<PessoaAtendente>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http
+@using System.Text.Json
+@model List<PessoaAtendente>
 
 <br />
 @if (Model == null)
@@ -7,7 +10,18 @@
 }
 else
 {
-    <table class="table table-hover">
+
+    string json = HttpContextAccessor.HttpContext.Session.GetString("user");
+
+    if (json != null)
+    {
+        PessoaAtendente user = JsonSerializer.Deserialize<PessoaAtendente>(json);
+
+        if (user != null)
+        {
+            if (user.Admin == "TRUE")
+            {
+                <table class="table table-hover">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -20,25 +34,30 @@ else
         </tr>
     </thead>
     @foreach (var atendente in Model)
-        {
-            <tbody>
-                <tr>
-                    <td>@atendente.PessoaId</td>
-                    <td>@atendente.Nome</td>
-                    <td>@atendente.CPF</td>
-                    <td>@atendente.Telefone</td>
-                    <td>@atendente.Login</td>
-                    <td>@atendente.Salario</td>
-                    <td>@atendente.Admin</td>
-                    <td>
-                        <a class="btn btn-sm btn-danger" href="/pessoaatendente/delete/@atendente.PessoaId">Apagar</a>
-                        <a class="btn btn-sm btn-warning" href="/pessoaatendente/update">Editar</a>
-                        <a class="btn btn-sm btn-info" href="/item/meus_pedidos">Meus Pedidos</a>
-                    </td>
-
-                </tr>
-            </tbody>
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@atendente.PessoaId</td>
+                                <td>@atendente.Nome</td>
+                                <td>@atendente.CPF</td>
+                                <td>@atendente.Telefone</td>
+                                <td>@atendente.Login</td>
+                                <td>@atendente.Salario</td>
+                                <td>@atendente.Admin</td>
+                                <td>
+                                    <a class="btn btn-sm btn-danger" href="/pessoaatendente/delete/@atendente.PessoaId">Apagar</a>
+                                    <a class="btn btn-sm btn-warning" href="/pessoaatendente/update/@atendente.PessoaId">Editar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+                <a class="btn btn-primary" href="/pessoaatendente/create">Adicionar</a>
+            }
         }
-    </table>
+    }
+    else
+    {
+        <div></div>
+    }
 }
-<a class="btn btn-primary" href="/pessoaatendente/create">Adicionar</a>

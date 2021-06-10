@@ -47,3 +47,8 @@
 /home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/PessoaAtendente/Create.cshtml.g.cs
 /home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/PessoaAtendente/Index.cshtml.g.cs
 /home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/PessoaAtendente/Login.cshtml.g.cs
+/home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/Produto/Index.cshtml.g.cs
+/home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/Produto/Create.cshtml.g.cs
+/home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/PessoaGarcon/Create.cshtml.g.cs
+/home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/PessoaGarcon/Index.cshtml.g.cs
+/home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/PessoaAtendente/Update.cshtml.g.cs

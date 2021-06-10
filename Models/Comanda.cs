@@ -12,7 +12,7 @@ namespace Inter_KissEspataria.Models
         public string Observacao { get; set; }
         public List<Item> Itens { get; set; } = new List<Item>();
 
-        public decimal Total
+        public decimal valorTotal
         {
             get
             {

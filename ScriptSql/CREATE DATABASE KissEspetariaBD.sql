@@ -45,9 +45,10 @@ GO
 CREATE TABLE Comandas
 (
     ComandaId INT NOT NULL IDENTITY,
-    ValorTotal DECIMAL(6,2) NOT NULL,
     AtendenteId INT NOT NULL,
     GarconId INT NOT NULL,
+    DataEmissao DATE,
+    ValorTotal DECIMAL(6,2) NOT NULL,
     Status INT NOT NULL,
     Observacao VARCHAR(MAX),
 
@@ -56,6 +57,9 @@ CREATE TABLE Comandas
     FOREIGN KEY (GarconId) REFERENCES PessoasGarcon(GarconId),
 )
 GO
+
+select *
+from Comandas
 
 CREATE TABLE Produtos
 (
@@ -67,9 +71,6 @@ CREATE TABLE Produtos
     PRIMARY KEY (ProdutoId),
 )
 GO
-
-SELECT *
-FROM Produtos
 
 
 CREATE TABLE ProdutoComandaItem
@@ -144,7 +145,7 @@ UPDATE PessoasAtendente SET
     WHERE AtendenteId = @AtendenteId 
 GO
 
-exec sp_atendente_update 1, 'Luis Henrique', '460938', '190-190', 'ladmin', '123456', 3000, FALSE
+exec sp_atendente_update 1, 'Luis Henrique', '460938', '190-190', 'ladmin', '123456', 3000, TRUE
 GO
 
 
@@ -169,27 +170,26 @@ GO
 ----------------------------------------------------
 --   BUSCAS P/ ID              ---------------------
 ----------------------------------------------------
-CREATE PROC sp_atendente_id
-    @PessoaId INT
-AS
-SELECT P.PessoaId AS Codigo,
-    P.Nome AS Nome,
-    P.CPF,
-    P.Telefone,
-    PA.[Login],
-    PA.Salario AS Salario,
-    CASE PA.Admin
-            WHEN 1 THEN 'TRUE'
-            ELSE 'FALSE'
-        END Administrador
-FROM Pessoas as P
-    INNER JOIN PessoasAtendente as PA
-    on P.PessoaId = PA.AtendenteId
-WHERE P.PessoaId = @PessoaId 
-GO
+-- CREATE PROC sp_atendente_id
+--     @PessoaId INT
+-- AS
+-- SELECT P.PessoaId,
+--     P.Nome,
+--     P.CPF,
+--     P.Telefone,
+--     PA.[Login],
+--     PA.Salario,
+--     CASE PA.Admin
+--             WHEN 1 THEN 'TRUE'
+--             ELSE 'FALSE'
+--         END [Admin]
+-- FROM Pessoas as P
+--     INNER JOIN PessoasAtendente as PA
+--     on P.PessoaId = PA.AtendenteId
+-- WHERE P.PessoaId = @PessoaId 
+-- GO
 
-EXEC sp_atendente_id 2
-GO
+-- CRIADO SELECT PARA CONSEGUIR RETORNAR CAMPO SENHA
 
 --VIEW ATENDENTE
 ----------------------------------------------------
@@ -224,7 +224,7 @@ GO
 ----------------------------------------------------
 CREATE PROC sp_produto_create
     @Descricao VARCHAR(50),
-    @QtdEstque INT,
+    @QtdEstoque INT,
     @Valor MONEY
 AS
 INSERT INTO Produtos
@@ -267,3 +267,161 @@ GO
 --PROC PESQUISAR PRODUTO P/ ID - NÃO TEVE NECESSIDADE
 --VIEW PRODUTO - NÃO TEVE NECESSIDADE
 
+
+--PROCEDURE GARÇON
+----------------------------------------------------
+--   CREATE                 ------------------------
+----------------------------------------------------
+CREATE PROC sp_garcon_create
+    @Nome VARCHAR(50),
+    @CPF VARCHAR(11),
+    @Telefone VARCHAR(13),
+    @ValorDia DECIMAL(6,2),
+    @Comissao DECIMAL(6,2),
+    @Ativo BIT
+AS
+INSERT INTO Pessoas
+VALUES
+    (@Nome, @CPF, @Telefone)
+
+INSERT INTO PessoasGarcon
+VALUES
+    (@@IDENTITY, @ValorDia, @Comissao, @Ativo)
+GO
+
+----------------------------------------------------
+--   UPDATE                 ------------------------
+----------------------------------------------------
+CREATE PROC sp_garcon_update
+    @PessoaId INT,
+    @Nome VARCHAR(50),
+    @CPF VARCHAR(11),
+    @Telefone VARCHAR(13),
+    @ValorDia DECIMAL(6,2),
+    @Comissao DECIMAL(6,2),
+    @Ativo BIT
+AS
+UPDATE Pessoas SET
+    Nome = @Nome,
+    CPF = @CPF,
+    Telefone = @Telefone
+    WHERE PessoaId = @PessoaId
+
+DECLARE @GarconId AS INT = @PessoaId
+
+UPDATE PessoasGarcon SET
+    ValorDia = @ValorDia,
+    Comissao = @Comissao,
+    Ativo = @Ativo
+    WHERE GarconId = @GarconId 
+GO
+
+----------------------------------------------------
+--   DELETE                 ------------------------
+----------------------------------------------------
+CREATE PROC sp_garcon_delete
+    @GarconId INT
+AS
+DELETE FROM PessoasGarcon
+    WHERE GarconId = @GarconId
+
+DECLARE @PessoaId AS INT = @GarconId
+
+DELETE FROM Pessoas
+    WHERE PessoaId = @PessoaId
+GO
+
+----------------------------------------------------
+--   BUSCAS P/ ID              ---------------------
+----------------------------------------------------
+CREATE PROC sp_garcon_id
+    @PessoaId INT
+AS
+SELECT P.PessoaId,
+    P.Nome,
+    P.CPF,
+    P.Telefone,
+    PG.ValorDia,
+    PG.Comissao,
+    CASE PG.Ativo
+            WHEN 1 THEN 'TRUE'
+            ELSE 'FALSE'
+        END Ativo
+FROM Pessoas as P
+    INNER JOIN PessoasGarcon as PG
+    on P.PessoaId = PG.GarconId
+WHERE P.PessoaId = @PessoaId 
+GO
+
+
+--VIEW GARÇON
+----------------------------------------------------
+--   VIEW                      ---------------------
+----------------------------------------------------
+CREATE VIEW vw_garcon
+AS
+    SELECT P.PessoaId,
+        P.Nome,
+        P.CPF,
+        P.Telefone,
+        PG.ValorDia,
+        PG.Comissao,
+        CASE PG.Ativo
+            WHEN 1 THEN 'TRUE'
+            ELSE 'FALSE'
+        END Ativo
+    FROM Pessoas as P
+        INNER JOIN PessoasGarcon as PG
+        on P.PessoaId = PG.GarconId
+GO
+
+
+
+--PROCEDURE COMANDA
+----------------------------------------------------
+--   CREATE                 ------------------------
+----------------------------------------------------
+CREATE PROC sp_comanda_create
+    @AtendenteId INT,
+    @GarconId INT,
+    @DataEmissao DATE,
+    @Status INT,
+    @Observacao VARCHAR
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRAN 
+        
+        INSERT INTO Comandas
+        (AtendenteId, GarconId, DataEmissao, [Status], Observacao)
+    VALUES(@AtendenteId, @GarconId, @DataEmissao, @Status, @Observacao)
+
+        SELECT @@IDENTITY AS Retorno;
+    
+        COMMIT TRAN
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRAN
+        SELECT ERROR_MESSAGE() AS RETORNO;
+    END CATCH
+END
+GO
+
+
+
+----------------------------------------------------
+--   UPDATE                 ------------------------
+----------------------------------------------------
+--VERIFICAR VIABILIDADE DE ALTERAÇÃO DE COMANDA
+
+
+----------------------------------------------------
+--   DELETE                 ------------------------
+----------------------------------------------------
+--NÃO PODEREMOS EXCLUIR UMA COMANDA
+
+
+--VIEW COMANDA
+----------------------------------------------------
+--   VIEW                      ---------------------
+----------------------------------------------------

@@ -12,12 +12,9 @@ namespace Inter_KissEspataria.Data
         {
             try
             {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = base.connectionDB;
+                SqlCommand cmd = new SqlCommand("sp_atendente_create", base.connectionDB);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.CommandText = @"exec sp_atendente_create @Nome, @CPF, 
-                                    @Telefone, @Login, @Senha, @Salario, @Admin";
 
                 cmd.Parameters.AddWithValue("@Nome", atendente.Nome);
                 cmd.Parameters.AddWithValue("@CPF", atendente.CPF);
@@ -80,11 +77,25 @@ namespace Inter_KissEspataria.Data
             {
 
                 SqlCommand cmd = new SqlCommand();
-                cmd.Connection = base.connectionDB;
-                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = base.connectionDB;//conexão com o Banco de Dados
 
-                cmd.CommandText = @"EXEC sp_atendente_id @id";
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.CommandText = @"SELECT  P.PessoaId,
+                                            P.Nome,
+                                            P.CPF,
+                                            P.Telefone,
+                                            PA.[Login],
+                                            PA.Senha,
+                                            PA.Salario,
+                                            CASE PA.Admin
+                                                    WHEN 1 THEN 'TRUE'
+                                                    ELSE 'FALSE'
+                                                END Administrador
+                                        FROM Pessoas as P
+                                            INNER JOIN PessoasAtendente AS PA
+                                            ON P.PessoaId = PA.AtendenteId
+                                        WHERE P.PessoaId = @PessoaId";
+
+                cmd.Parameters.AddWithValue("@PessoaId", id);
 
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -92,7 +103,7 @@ namespace Inter_KissEspataria.Data
                 {
                     atendente = new PessoaAtendente
                     {
-                        PessoaId = (int)reader["Codigo"],
+                        PessoaId = (int)reader["PessoaId"],
                         Nome = (string)reader["Nome"],
                         CPF = (string)reader["CPF"],
                         Telefone = (string)reader["Telefone"],
@@ -114,20 +125,17 @@ namespace Inter_KissEspataria.Data
         {
             try
             {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = base.connectionDB;
+                SqlCommand cmd = new SqlCommand("sp_atendente_update", base.connectionDB);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.CommandText = "EXEC sp_atendente_update @pessoaid, @nome, @cpf, @telefone, @login, @senha, @salario, @admin";
-
-                cmd.Parameters.AddWithValue("@pessoaid", atendente.PessoaId);
-                cmd.Parameters.AddWithValue("@nome", atendente.Nome);
-                cmd.Parameters.AddWithValue("@cpf", atendente.CPF);
-                cmd.Parameters.AddWithValue("@telefone", atendente.Telefone);
-                cmd.Parameters.AddWithValue("@login", atendente.Login);
-                cmd.Parameters.AddWithValue("@senha", atendente.Senha);
-                cmd.Parameters.AddWithValue("@salario", atendente.Salario);
-                cmd.Parameters.AddWithValue("@admin", atendente.Admin);
+                cmd.Parameters.AddWithValue("@PessoaId", atendente.PessoaId);
+                cmd.Parameters.AddWithValue("@Nome", atendente.Nome);
+                cmd.Parameters.AddWithValue("@CPF", atendente.CPF);
+                cmd.Parameters.AddWithValue("@Telefone", atendente.Telefone);
+                cmd.Parameters.AddWithValue("@Login", atendente.Login);
+                cmd.Parameters.AddWithValue("@Senha", atendente.Senha);
+                cmd.Parameters.AddWithValue("@Salario", atendente.Salario);
+                cmd.Parameters.AddWithValue("@Admin", atendente.Admin);
 
                 cmd.ExecuteNonQuery();
             }
@@ -141,13 +149,10 @@ namespace Inter_KissEspataria.Data
         {
             try
             {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = base.connectionDB;
+                SqlCommand cmd = new SqlCommand("sp_atendente_delete", base.connectionDB);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.CommandText = @"exec sp_atendente_delete @id";
-
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@AtendenteId", id);
 
                 cmd.ExecuteNonQuery();
             }

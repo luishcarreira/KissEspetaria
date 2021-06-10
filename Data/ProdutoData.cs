@@ -1,3 +1,4 @@
+using System.Data.Common;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,11 +13,8 @@ namespace Inter_KissEspataria.Data
         {
             try
             {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = base.connectionDB;
+                SqlCommand cmd = new SqlCommand("sp_produto_create", base.connectionDB);
                 cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.CommandText = @"exec sp_produto_create @Descricao, @QtdEstoque, @Valor";
 
                 cmd.Parameters.AddWithValue("@Descricao", produto.Descricao);
                 cmd.Parameters.AddWithValue("@QtdEstoque", produto.QtdEstoque);
@@ -34,11 +32,8 @@ namespace Inter_KissEspataria.Data
         {
             try
             {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = base.connectionDB;
+                SqlCommand cmd = new SqlCommand("sp_produto_update", base.connectionDB);
                 cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.CommandText = "EXEC sp_produto_update @ProdutoId, @Descricao, @QtdEstoque, @Valor";
 
                 cmd.Parameters.AddWithValue("@ProdutoId", produto.ProdutoId);
                 cmd.Parameters.AddWithValue("@Descricao", produto.Descricao);
@@ -57,13 +52,10 @@ namespace Inter_KissEspataria.Data
         {
             try
             {
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = base.connectionDB;
+                SqlCommand cmd = new SqlCommand("sp_produto_delete", base.connectionDB);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.CommandText = @"exec sp_produto_delete @id";
-
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@ProdutoId", id);
 
                 cmd.ExecuteNonQuery();
             }

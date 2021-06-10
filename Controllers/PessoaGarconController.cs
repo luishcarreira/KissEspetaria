@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Inter_KissEspataria.Controllers
 {
-    public class ProdutoController : Controller
+    public class PessoaGarconController : Controller
     {
         public IActionResult Index()
         {
-            using (var data = new ProdutoData())
+            using (var data = new PessoaGarconData())
                 return View(data.Read());
         }
 
@@ -19,22 +19,22 @@ namespace Inter_KissEspataria.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Produto produto)
+        public IActionResult Create(PessoaGarcon garcon)
         {
             if (!ModelState.IsValid)
             {
-                return View(produto);
+                return View(garcon);
             }
 
-            using (var data = new ProdutoData())
-                data.Create(produto);
+            using (var data = new PessoaGarconData())
+                data.Create(garcon);
 
-            return RedirectToAction("Index", produto);
+            return RedirectToAction("Index", garcon);
         }
 
         public IActionResult Delete(int id)
         {
-            using (var data = new ProdutoData())
+            using (var data = new PessoaGarconData())
                 data.Delete(id);
 
             return RedirectToAction("Index", "");
@@ -43,20 +43,20 @@ namespace Inter_KissEspataria.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            using (var data = new ProdutoData())
+            using (var data = new PessoaGarconData())
                 return View(data.Read(id));
         }
 
         [HttpPost]
-        public IActionResult Update(int id, Produto produto)
+        public IActionResult Update(int id, PessoaGarcon garcon)
         {
-            produto.ProdutoId = id;
+            garcon.PessoaId = id;
 
             if (!ModelState.IsValid)
-                return View(produto);
+                return View(garcon);
 
-            using (var data = new ProdutoData())
-                data.Update(produto);
+            using (var data = new PessoaGarconData())
+                data.Update(garcon);
 
             return RedirectToAction("Index");
         }

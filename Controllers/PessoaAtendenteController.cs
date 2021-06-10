@@ -58,41 +58,43 @@ namespace Inter_KissEspataria.Controllers
             return RedirectToAction("Index", novoAtendente);
         }
 
-        /*[HttpPost]
-        public IActionResult Read(IFormCollection atendente)
-        {
-            string nome = atendente["Nome"];
-            string login = atendente["Login"];
-            string senha = atendente["Senha"];
+        // [HttpPost]
+        // public IActionResult Read(IFormCollection atendente)
+        // {
+        //     string nome = atendente["Nome"];
+        //     string telefone = atendente["Telefone"];
+        //     string cpf = atendente["CPF"];
+        //     string login = atendente["Login"];
+        //     string senha = atendente["Senha"];
 
-            if(!login.Equals(" "))
-            {
-                var atend = new PessoaAtendente();
+        //     if(!login.Equals(" "))
+        //     {
+        //         var atend = new PessoaAtendente();
 
-                cli.Nome = cliente["Nome"];
-                cli.Email = cliente["Email"];
-                cli.Senha = cliente["Senha"];
+        //         atend.Nome = atendente["Nome"];
+        //         atend.Login = atendente["Login"];
+                
 
-                Cliente c = new Cliente();
+        //         PessoaAtendente a = new PessoaAtendente();
 
-                using (var data = new ClienteData())
-                    c = data.Read(cli.Email);
+        //         using (var data = new PessoaAtendenteData())
+        //             a = data.Read(atend.Login);
 
-                if(c.Senha == cli.Senha)
-                {
-                    ViewBag.Mensagem = "Olá";
-                    return View("Index", c);
-                }
-                else
-                {
-                    ViewBag.Mensagem = "Usuário ou senha inválidos";
-                    return View("Index", null);
-                }
+        //         if(a.Senha == atend.Senha)
+        //         {
+        //             ViewBag.Mensagem = "Olá";
+        //             return View("Index", c);
+        //         }
+        //         else
+        //         {
+        //             ViewBag.Mensagem = "Usuário ou senha inválidos";
+        //             return View("Index", null);
+        //         }
 
-            }
+        //     }
 
-            return View("Create");
-        }*/
+        //     return View("Create");
+        // }
 
         public IActionResult Delete(int id)
         {
