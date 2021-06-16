@@ -73,7 +73,7 @@ namespace Inter_KissEspataria.Controllers
 
         //         atend.Nome = atendente["Nome"];
         //         atend.Login = atendente["Login"];
-                
+
 
         //         PessoaAtendente a = new PessoaAtendente();
 
@@ -149,7 +149,7 @@ namespace Inter_KissEspataria.Controllers
 
                 HttpContext.Session.SetString("user", JsonSerializer.Serialize<PessoaAtendente>(user));
 
-                return RedirectToAction("Index", "PessoaAtendente");
+                return RedirectToAction("Index", "Home");
             }
         }
     }

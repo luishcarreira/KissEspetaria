@@ -108,6 +108,7 @@ namespace Inter_KissEspataria.Data
                         CPF = (string)reader["CPF"],
                         Telefone = (string)reader["Telefone"],
                         Login = (string)reader["Login"],
+                        Senha = (string)reader["Senha"],
                         Salario = (decimal)reader["Salario"],
                         Admin = (string)reader["Administrador"]
                     };
@@ -119,6 +120,38 @@ namespace Inter_KissEspataria.Data
             }
 
             return atendente;
+        }
+
+        public List<PessoaViewModel> ReadName()
+        {
+            List<PessoaViewModel> lista = new List<PessoaViewModel>();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = base.connectionDB;
+                cmd.CommandText = @"Select Codigo, Nome From vw_atendente";
+
+                //execução do Select no BD
+                //o reader vai receber o retorno do Select
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())//percorrendo a table até o EOF (End of File)
+                {
+                    PessoaViewModel atendente = new PessoaViewModel();
+
+                    atendente.PessoaId = (int)reader["Codigo"];
+                    atendente.Nome = (string)reader["Nome"];
+
+                    lista.Add(atendente);
+                }
+            }
+            catch (SqlException sqlerror)
+            {
+                Console.WriteLine("Erro: " + sqlerror);
+            }
+
+            return lista;
         }
 
         public void Update(PessoaAtendente atendente)

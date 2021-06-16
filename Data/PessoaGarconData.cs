@@ -73,7 +73,7 @@ namespace Inter_KissEspataria.Data
             try
             {
 
-                SqlCommand cmd = new SqlCommand("sp_atendente_id", base.connectionDB);
+                SqlCommand cmd = new SqlCommand("sp_garcon_id", base.connectionDB);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@PessoaId", id);
@@ -100,6 +100,36 @@ namespace Inter_KissEspataria.Data
             }
 
             return garcon;
+        }
+
+        public List<PessoaGarcon> ReadName()
+        {
+            List<PessoaGarcon> lista = new List<PessoaGarcon>();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = base.connectionDB;
+                cmd.CommandText = @"Select PessoaId, Nome From vw_garcon";
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())//percorrendo a table até o EOF (End of File)
+                {
+                    PessoaGarcon garcon = new PessoaGarcon();
+
+                    garcon.PessoaId = (int)reader["PessoaId"];
+                    garcon.Nome = (string)reader["Nome"];
+
+                    lista.Add(garcon);
+                }
+            }
+            catch (SqlException sqlerror)
+            {
+                Console.WriteLine("Erro: " + sqlerror);
+            }
+
+            return lista;
         }
 
         public void Update(PessoaGarcon garcon)

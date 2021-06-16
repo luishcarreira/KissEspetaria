@@ -12,46 +12,46 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     @* <link rel="stylesheet" href="~/css/site.css" /> *@
     @* <link rel="stylesheet" href="~/css/style_login.css" /> *@
+    <link rel="stylesheet" href="~/css/sb-admin-2.min.css">
     <link rel="stylesheet" href="~/css/style_home.css" />
 </head>
 
 <body>
     <div class="wrapper d-flex align-items-stretch">
-        <nav id="sidebar" class="active">
-            <h1><a href="index.html" class="logo">Espetaria</a></h1>
+        <nav id="sidebar">
+            <h2>
+                <a href="index.html" class="logo">
+                    Kiss
+                    Espetaria
+                </a>
+            </h2>
             <ul class="list-unstyled components mb-5">
                 <li class="active">
                     <a asp-controller="Home" asp-action="Index"><span class="fa fa-home"></span> Home</a>
                 </li>
                 <li>
-                    <a sp-controller="PessoaAtendente" asp-action="Index"><span class="fa fa-user"></span>
+                    <a asp-controller="Comanda" asp-action="Index"><span class="fa fa-pencil-square-o"></span>
+                        Comandas</a>
+                </li>
+                <li>
+                    <a asp-controller="Produto" asp-action="Index"><span class="fa fa-archive"></span> Produtos</a>
+                </li>
+                <li>
+                    <a asp-controller="PessoaAtendente" asp-action="Index"><span class="fa fa-user"></span>
                         Atendentes</a>
                 </li>
                 <li>
-                    <a href="#"><span class="fa fa-sticky-note"></span> Produtos</a>
+                    <a asp-controller="PessoaGarcon" asp-action="Index"><span class="fa fa-glass"></span> Garçons</a>
                 </li>
-                <li>
-                    <a href="#"><span class="fa fa-cogs"></span> Garçons</a>
-                </li>
-                <li>
-                    <a href="#"><span class="fa fa-paper-plane"></span> Comandas</a>
-                </li>
+
             </ul>
         </nav>
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
-
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
 
-                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-justify" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M2 12.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
-                        </svg>
-                    </button>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -60,26 +60,25 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" sp-controller="PessoaAtendente" asp-action="Index">Atendentes</a>
+                                <a class="nav-link" asp-controller="Comanda" asp-action="Index">Comandas</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Produto" asp-action="Index">Produtos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="PessoaGarcon" asp-action="Index">Garçons</a>
+                                <a class="nav-link" asp-controller="PessoaAtendente" asp-action="Index">Atendentes</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Comandas</a>
+                                <a class="nav-link" asp-controller="PessoaGarcon" asp-action="Index">Garçons</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
-
             <div class="container">
                 <main role="main" class="pb-3">
                     @RenderBody()

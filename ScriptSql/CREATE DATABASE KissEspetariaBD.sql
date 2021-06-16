@@ -4,7 +4,6 @@ GO
 USE KissEspetariaBD
 GO
 
-
 CREATE TABLE Pessoas
 (
     PessoaId INT NOT NULL IDENTITY,
@@ -33,7 +32,7 @@ GO
 CREATE TABLE PessoasGarcon
 (
     GarconId INT NOT NULL,
-    ValorDia DECIMAL(6,2) NOT NULL,
+    HrTrab INT NOT NULL,
     Comissao DECIMAL(6,2) NOT NULL,
     Ativo BIT,
 
@@ -41,6 +40,7 @@ CREATE TABLE PessoasGarcon
     FOREIGN KEY (GarconId) REFERENCES Pessoas(PessoaId)
 )
 GO
+
 
 CREATE TABLE Comandas
 (
@@ -58,8 +58,6 @@ CREATE TABLE Comandas
 )
 GO
 
-select *
-from Comandas
 
 CREATE TABLE Produtos
 (
@@ -78,7 +76,7 @@ CREATE TABLE ProdutoComandaItem
     ProdutoId INT NOT NULL,
     ComandaId INT NOT NULL,
     Quantidade INT NOT NULL,
-    ValorUnitario MONEY NOT NULL,
+    ValorUnitario DECIMAL(6,2) NOT NULL,
 
     PRIMARY KEY (ProdutoId, ComandaId),
     FOREIGN KEY (ProdutoId) REFERENCES Produtos(ProdutoId),
@@ -229,7 +227,7 @@ CREATE PROC sp_produto_create
 AS
 INSERT INTO Produtos
 VALUES
-    (@Descricao, @QtdEstque, @Valor)
+    (@Descricao, @QtdEstoque, @Valor)
 GO
 
 EXEC sp_produto_create 'Chocolate em Pó', 5, 5.50
@@ -276,7 +274,7 @@ CREATE PROC sp_garcon_create
     @Nome VARCHAR(50),
     @CPF VARCHAR(11),
     @Telefone VARCHAR(13),
-    @ValorDia DECIMAL(6,2),
+    @HrTrab DECIMAL(6,2),
     @Comissao DECIMAL(6,2),
     @Ativo BIT
 AS
@@ -286,7 +284,10 @@ VALUES
 
 INSERT INTO PessoasGarcon
 VALUES
-    (@@IDENTITY, @ValorDia, @Comissao, @Ativo)
+    (@@IDENTITY, @HrTrab, @Comissao, @Ativo)
+GO
+
+EXEC sp_garcon_create "Matheus G.", "80808080", "174256399", 12, 1.9, TRUE
 GO
 
 ----------------------------------------------------
@@ -297,7 +298,7 @@ CREATE PROC sp_garcon_update
     @Nome VARCHAR(50),
     @CPF VARCHAR(11),
     @Telefone VARCHAR(13),
-    @ValorDia DECIMAL(6,2),
+    @HrTrab DECIMAL(6,2),
     @Comissao DECIMAL(6,2),
     @Ativo BIT
 AS
@@ -310,11 +311,12 @@ UPDATE Pessoas SET
 DECLARE @GarconId AS INT = @PessoaId
 
 UPDATE PessoasGarcon SET
-    ValorDia = @ValorDia,
+    Hrtrab = @HrTrab,
     Comissao = @Comissao,
     Ativo = @Ativo
     WHERE GarconId = @GarconId 
 GO
+
 
 ----------------------------------------------------
 --   DELETE                 ------------------------
@@ -341,7 +343,7 @@ SELECT P.PessoaId,
     P.Nome,
     P.CPF,
     P.Telefone,
-    PG.ValorDia,
+    PG.HrTrab,
     PG.Comissao,
     CASE PG.Ativo
             WHEN 1 THEN 'TRUE'
@@ -353,7 +355,6 @@ FROM Pessoas as P
 WHERE P.PessoaId = @PessoaId 
 GO
 
-
 --VIEW GARÇON
 ----------------------------------------------------
 --   VIEW                      ---------------------
@@ -364,7 +365,7 @@ AS
         P.Nome,
         P.CPF,
         P.Telefone,
-        PG.ValorDia,
+        PG.HrTrab,
         PG.Comissao,
         CASE PG.Ativo
             WHEN 1 THEN 'TRUE'
@@ -374,8 +375,6 @@ AS
         INNER JOIN PessoasGarcon as PG
         on P.PessoaId = PG.GarconId
 GO
-
-
 
 --PROCEDURE COMANDA
 ----------------------------------------------------
@@ -396,7 +395,7 @@ BEGIN
         (AtendenteId, GarconId, DataEmissao, [Status], Observacao)
     VALUES(@AtendenteId, @GarconId, @DataEmissao, @Status, @Observacao)
 
-        SELECT @@IDENTITY AS Retorno;
+        SELECT @@IDENTITY;
     
         COMMIT TRAN
     END TRY
@@ -420,8 +419,46 @@ GO
 ----------------------------------------------------
 --NÃO PODEREMOS EXCLUIR UMA COMANDA
 
+----------------------------------------------------
+--   BUSCAR P/ ID           ------------------------
+----------------------------------------------------
+CREATE PROC sp_comanda_item_id
+    @ComandaId INT
+AS
+SELECT
+    c.ComandaId Comanda,
+    COUNT(*) 'Nº Item',
+    c.AtendenteId Atendente,
+    c.GarconId Garçom,
+    p.Descricao Produto,
+    PCI.Quantidade Qtd,
+    c.ValorTotal 'Valor Total'
+
+FROM Comandas C, Produtos P, ProdutoComandaItem PCI
+WHERE PCI.ComandaId = @ComandaId
+GO
+
 
 --VIEW COMANDA
 ----------------------------------------------------
 --   VIEW                      ---------------------
+----------------------------------------------------
+
+
+--PROCEDURE ITEM
+----------------------------------------------------
+--   CREATE                 ------------------------
+----------------------------------------------------
+CREATE PROC sp_item_create
+    @ProdutoId INT,
+    @ComandaId INT,
+    @Quantidade INT ,
+    @ValorUnitario DECIMAL(6,2)
+AS
+INSERT INTO ProdutoComandaItem
+VALUES(@ProdutoId, @ComandaId, @Quantidade, @ValorUnitario)
+GO
+
+----------------------------------------------------
+--   BUSCAS P/ ID              ---------------------
 ----------------------------------------------------
