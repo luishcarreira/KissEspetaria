@@ -54,10 +54,65 @@ else
                 </table>
                 <a class="btn btn-primary" href="/pessoaatendente/create">Adicionar</a>
             }
+            else
+            {
+                <div class="page-content page-container" id="page-content">
+    <div class="padding">
+        <div class="row container">
+            <div class="col-xl-6 col-md-12">
+                <div class="card user-card-full">
+                    <div class="row m-l-0 m-r-0">
+                        <div class="col-sm-4 bg-c-lite-green user-profile">
+                            <div class="card-block text-center text-white">
+                                <div class="m-b-25"> <img src="~/images/user.png" class="img-radius"
+                                        alt="User-Profile-Image"></div>
+                                <h6 class="f-w-600">
+                                    @user.Nome
+                                </h6>
+                                <p>Atendente</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-block">
+                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Principal</h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">CPF</p>
+                                        <h6 class="text-muted f-w-400">@user.CPF</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Telefone</p>
+                                        <h6 class="text-muted f-w-400">@user.Telefone</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Salário</p>
+                                        <h6 class="text-muted f-w-400">@user.Salario</h6>
+                                    </div>
+                                </div>
+                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Login</h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Login</p>
+                                        <h6 class="text-muted f-w-400">@user.Login</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Senha</p>
+                                        <h6 class="text-muted f-w-400">@user.Senha</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Administrador</p>
+                                        <h6 class="text-muted f-w-400">@user.Admin</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            }
         }
-    }
-    else
-    {
-        <div></div>
     }
 }

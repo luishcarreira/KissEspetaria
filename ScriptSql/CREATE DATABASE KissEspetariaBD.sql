@@ -113,7 +113,6 @@ GO
 exec sp_atendente_create 'Lucas', '545770221', '32131162', 5000, 'lucasadm', '4321', FALSE
 GO
 
-
 ----------------------------------------------------
 --   UPDATE                 ------------------------
 ----------------------------------------------------
@@ -130,8 +129,8 @@ AS
 UPDATE Pessoas SET
     Nome = @Nome,
     CPF = @CPF,
-    Telefone = @Telefone
-    Salario = @Salario,
+    Telefone = @Telefone,
+    Salario = @Salario
     WHERE PessoaId = @PessoaId
 
 DECLARE @AtendenteId AS INT = @PessoaId
@@ -143,7 +142,8 @@ UPDATE PessoasAtendente SET
     WHERE AtendenteId = @AtendenteId 
 GO
 
-
+EXEC sp_atendente_update 1, 'Luis', '46093823857', '190', 1200, 'lhenrique', '123456', TRUE
+go
 ----------------------------------------------------
 --   DELETE                 ------------------------
 ----------------------------------------------------
