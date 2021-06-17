@@ -7,9 +7,8 @@ namespace Inter_KissEspataria.Models
     {
         [Display(Name = "Valor p/ Dia")]
         [Required(ErrorMessage = "Campo 'Valor p/ Dia' obrigatório!")]
-        public Decimal valorDia { get; set; }
-
         public Decimal Comissao { get; set; }
+        public String RegimeTrab { get; set; }
 
         public String Ativo { get; set; }
     }

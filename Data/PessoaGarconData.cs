@@ -19,8 +19,9 @@ namespace Inter_KissEspataria.Data
                 cmd.Parameters.AddWithValue("@Nome", garcon.Nome);
                 cmd.Parameters.AddWithValue("@CPF", garcon.CPF);
                 cmd.Parameters.AddWithValue("@Telefone", garcon.Telefone);
-                cmd.Parameters.AddWithValue("@ValorDia", garcon.valorDia);
+                cmd.Parameters.AddWithValue("@Salario", garcon.Salario);
                 cmd.Parameters.AddWithValue("@Comissao", garcon.Comissao);
+                cmd.Parameters.AddWithValue("@RegimeTrab", garcon.RegimeTrab);
                 cmd.Parameters.AddWithValue("@Ativo", garcon.Ativo);
 
                 cmd.ExecuteNonQuery();
@@ -51,8 +52,9 @@ namespace Inter_KissEspataria.Data
                     garcon.Nome = (string)reader["Nome"];
                     garcon.CPF = (string)reader["CPF"];
                     garcon.Telefone = (string)reader["Telefone"];
-                    garcon.valorDia = (decimal)reader["ValorDia"];
+                    garcon.Salario = (decimal)reader["Salario"];
                     garcon.Comissao = (decimal)reader["Comissao"];
+                    garcon.RegimeTrab = (string)reader["RegimeTrab"];
                     garcon.Ativo = (string)reader["Ativo"];
 
                     lista.Add(garcon);
@@ -88,8 +90,9 @@ namespace Inter_KissEspataria.Data
                         Nome = (string)reader["Nome"],
                         CPF = (string)reader["CPF"],
                         Telefone = (string)reader["Telefone"],
-                        valorDia = (decimal)reader["ValorDia"],
+                        Salario = (decimal)reader["Salario"],
                         Comissao = (decimal)reader["Comissao"],
+                        RegimeTrab = (string)reader["RegimeTrab"],
                         Ativo = (string)reader["Ativo"]
                     };
                 }
@@ -139,12 +142,12 @@ namespace Inter_KissEspataria.Data
                 SqlCommand cmd = new SqlCommand("sp_garcon_update", base.connectionDB);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@PessoaId", garcon.PessoaId);
                 cmd.Parameters.AddWithValue("@Nome", garcon.Nome);
                 cmd.Parameters.AddWithValue("@CPF", garcon.CPF);
                 cmd.Parameters.AddWithValue("@Telefone", garcon.Telefone);
-                cmd.Parameters.AddWithValue("@ValorDia", garcon.valorDia);
+                cmd.Parameters.AddWithValue("@Salario", garcon.Salario);
                 cmd.Parameters.AddWithValue("@Comissao", garcon.Comissao);
+                cmd.Parameters.AddWithValue("@RegimeTrab", garcon.RegimeTrab);
                 cmd.Parameters.AddWithValue("@Ativo", garcon.Ativo);
 
                 cmd.ExecuteNonQuery();

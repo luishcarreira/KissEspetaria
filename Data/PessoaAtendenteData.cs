@@ -19,9 +19,9 @@ namespace Inter_KissEspataria.Data
                 cmd.Parameters.AddWithValue("@Nome", atendente.Nome);
                 cmd.Parameters.AddWithValue("@CPF", atendente.CPF);
                 cmd.Parameters.AddWithValue("@Telefone", atendente.Telefone);
+                cmd.Parameters.AddWithValue("@Salario", atendente.Salario);
                 cmd.Parameters.AddWithValue("@Login", atendente.Login);
                 cmd.Parameters.AddWithValue("@Senha", atendente.Senha);
-                cmd.Parameters.AddWithValue("@Salario", atendente.Salario);
                 cmd.Parameters.AddWithValue("@Admin", atendente.Admin);
 
                 cmd.ExecuteNonQuery();
@@ -54,8 +54,8 @@ namespace Inter_KissEspataria.Data
                     atendente.Nome = (string)reader["Nome"];
                     atendente.CPF = (string)reader["CPF"];
                     atendente.Telefone = (string)reader["Telefone"];
-                    atendente.Login = (string)reader["Login"];
                     atendente.Salario = (decimal)reader["Salario"];
+                    atendente.Login = (string)reader["Login"];
                     atendente.Admin = (string)reader["Administrador"];
 
                     lista.Add(atendente);
@@ -83,9 +83,9 @@ namespace Inter_KissEspataria.Data
                                             P.Nome,
                                             P.CPF,
                                             P.Telefone,
+                                            P.Salario,
                                             PA.[Login],
                                             PA.Senha,
-                                            PA.Salario,
                                             CASE PA.Admin
                                                     WHEN 1 THEN 'TRUE'
                                                     ELSE 'FALSE'
@@ -107,9 +107,9 @@ namespace Inter_KissEspataria.Data
                         Nome = (string)reader["Nome"],
                         CPF = (string)reader["CPF"],
                         Telefone = (string)reader["Telefone"],
+                        Salario = (decimal)reader["Salario"],
                         Login = (string)reader["Login"],
                         Senha = (string)reader["Senha"],
-                        Salario = (decimal)reader["Salario"],
                         Admin = (string)reader["Administrador"]
                     };
                 }
@@ -161,13 +161,12 @@ namespace Inter_KissEspataria.Data
                 SqlCommand cmd = new SqlCommand("sp_atendente_update", base.connectionDB);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@PessoaId", atendente.PessoaId);
                 cmd.Parameters.AddWithValue("@Nome", atendente.Nome);
                 cmd.Parameters.AddWithValue("@CPF", atendente.CPF);
                 cmd.Parameters.AddWithValue("@Telefone", atendente.Telefone);
+                cmd.Parameters.AddWithValue("@Salario", atendente.Salario);
                 cmd.Parameters.AddWithValue("@Login", atendente.Login);
                 cmd.Parameters.AddWithValue("@Senha", atendente.Senha);
-                cmd.Parameters.AddWithValue("@Salario", atendente.Salario);
                 cmd.Parameters.AddWithValue("@Admin", atendente.Admin);
 
                 cmd.ExecuteNonQuery();
@@ -208,9 +207,9 @@ namespace Inter_KissEspataria.Data
                                             P.Nome,
                                             P.CPF,
                                             P.Telefone,
+                                            P.Salario,
                                             PA.[Login],
                                             PA.Senha,
-                                            PA.Salario,
                                             CASE PA.Admin
                                                     WHEN 1 THEN 'TRUE'
                                                     ELSE 'FALSE'
@@ -234,9 +233,9 @@ namespace Inter_KissEspataria.Data
                         Nome = (string)reader["Nome"],
                         CPF = (string)reader["CPF"],
                         Telefone = (string)reader["Telefone"],
+                        Salario = (decimal)reader["Salario"],
                         Login = (string)reader["Login"],
                         Senha = (string)reader["Senha"],
-                        Salario = (decimal)reader["Salario"],
                         Admin = (string)reader["Administrador"]
                     };
                 }

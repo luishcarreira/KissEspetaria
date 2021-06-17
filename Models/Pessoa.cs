@@ -13,5 +13,6 @@ namespace Inter_KissEspataria.Models
         public String Nome { get; set; }
         public String CPF { get; set; }
         public String Telefone { get; set; }
+        public decimal Salario { get; set; }
     }
 }

@@ -27,9 +27,9 @@ namespace Inter_KissEspataria.Controllers
             string nome = atendente["Nome"];
             string cpf = atendente["CPF"];
             string telefone = atendente["Telefone"];
+            double salario = Convert.ToDouble(atendente["Salario"]);
             string login = atendente["Login"];
             string senha = atendente["Senha"];
-            double salario = Convert.ToDouble(atendente["Salario"]);
             bool admin = Convert.ToBoolean(atendente["Admin"]);
 
             if (nome.Length < 6)
@@ -46,9 +46,9 @@ namespace Inter_KissEspataria.Controllers
             novoAtendente.Nome = atendente["Nome"];
             novoAtendente.CPF = atendente["CPF"];
             novoAtendente.Telefone = atendente["Telefone"];
+            novoAtendente.Salario = Convert.ToDecimal(atendente["Salario"]);
             novoAtendente.Login = atendente["Login"];
             novoAtendente.Senha = atendente["Senha"];
-            novoAtendente.Salario = Convert.ToDecimal(atendente["Salario"]);
             novoAtendente.Admin = atendente["Admin"];
 
 

@@ -18,13 +18,21 @@
     </div>
 
     <div class="form-group">
-        <label>Valor por Dia</label>
-        <input asp-for="valorDia" class="form-control" />
+        <label>Salario</label>
+        <input asp-for="Salario" class="form-control" />
     </div>
 
     <div class="form-group">
         <label>Comissão(%)</label>
         <input asp-for="Comissao" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Regime Trabalista</label>
+        <select asp-for="RegimeTrab">
+            <option value="CLT">CLT</option>
+            <option value="Freelancer">Freelancer</option>
+        </select>
     </div>
 
     <div class="form-group">

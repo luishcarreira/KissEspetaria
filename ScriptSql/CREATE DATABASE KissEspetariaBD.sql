@@ -10,6 +10,7 @@ CREATE TABLE Pessoas
     Nome VARCHAR(50) NOT NULL,
     CPF VARCHAR(11) NOT NULL,
     Telefone VARCHAR(13) NOT NULL,
+    Salario DECIMAL(6,2) NOT NULL,
 
     PRIMARY KEY (PessoaId)
 )
@@ -20,7 +21,6 @@ CREATE TABLE PessoasAtendente
     AtendenteId INT NOT NULL,
     Login VARCHAR(10) NOT NULL,
     Senha VARCHAR(16) NOT NULL,
-    Salario DECIMAL(6,2) NOT NULL,
     [Admin] BIT NOT NULL,
 
     PRIMARY KEY (AtendenteId),
@@ -32,8 +32,8 @@ GO
 CREATE TABLE PessoasGarcon
 (
     GarconId INT NOT NULL,
-    HrTrab INT NOT NULL,
-    Comissao DECIMAL(6,2) NOT NULL,
+    Comissao DECIMAL(3,2) NOT NULL,
+    RegimeTrab VARCHAR(40),
     Ativo BIT,
 
     PRIMARY KEY (GarconId),
@@ -93,24 +93,24 @@ CREATE PROC sp_atendente_create
     @Nome VARCHAR(50),
     @CPF VARCHAR(11),
     @Telefone VARCHAR(13),
+    @Salario DECIMAL(6,2),
     @Login VARCHAR(10),
     @Senha VARCHAR(16),
-    @Salario DECIMAL(6,2),
     @Admin BIT
 AS
 INSERT INTO Pessoas
 VALUES
-    (@Nome, @CPF, @Telefone)
+    (@Nome, @CPF, @Telefone, @Salario)
 
 INSERT INTO PessoasAtendente
 VALUES
-    (@@IDENTITY, @Login, @Senha, @Salario, @Admin)
+    (@@IDENTITY, @Login, @Senha, @Admin)
 GO
 
-exec sp_atendente_create 'Luis', '46093823857', '190', 'lhenrique', '1234', 1200, TRUE
+exec sp_atendente_create 'Luis', '46093823857', '190', 1200, 'lhenrique', '1234', TRUE
 GO
 
-exec sp_atendente_create 'Lucas', '545770221', '32131162', 'lucasadm', '4321', 5000, FALSE
+exec sp_atendente_create 'Lucas', '545770221', '32131162', 5000, 'lucasadm', '4321', FALSE
 GO
 
 
@@ -122,15 +122,16 @@ CREATE PROC sp_atendente_update
     @Nome VARCHAR(50),
     @CPF VARCHAR(11),
     @Telefone VARCHAR(13),
+    @Salario DECIMAL(6,2),
     @Login VARCHAR(10),
     @Senha VARCHAR(16),
-    @Salario DECIMAL(6,2),
     @Admin BIT
 AS
 UPDATE Pessoas SET
     Nome = @Nome,
     CPF = @CPF,
     Telefone = @Telefone
+    Salario = @Salario,
     WHERE PessoaId = @PessoaId
 
 DECLARE @AtendenteId AS INT = @PessoaId
@@ -138,12 +139,8 @@ DECLARE @AtendenteId AS INT = @PessoaId
 UPDATE PessoasAtendente SET
     [Login] = @Login,
     Senha = @Senha,
-    Salario = @Salario,
     [Admin] = @Admin
     WHERE AtendenteId = @AtendenteId 
-GO
-
-exec sp_atendente_update 1, 'Luis Henrique', '460938', '190-190', 'ladmin', '123456', 3000, TRUE
 GO
 
 
@@ -199,8 +196,8 @@ AS
         P.Nome AS Nome,
         P.CPF,
         P.Telefone,
+        P.Salario AS Salario,
         PA.[Login],
-        PA.Salario AS Salario,
         CASE PA.Admin
             WHEN 1 THEN 'TRUE'
             ELSE 'FALSE'
@@ -274,20 +271,21 @@ CREATE PROC sp_garcon_create
     @Nome VARCHAR(50),
     @CPF VARCHAR(11),
     @Telefone VARCHAR(13),
-    @HrTrab DECIMAL(6,2),
-    @Comissao DECIMAL(6,2),
+    @Salario DECIMAL(6,2),
+    @Comissao DECIMAL(3,2),
+    @RegimeTrab VARCHAR(40),
     @Ativo BIT
 AS
 INSERT INTO Pessoas
 VALUES
-    (@Nome, @CPF, @Telefone)
+    (@Nome, @CPF, @Telefone, @Salario)
 
 INSERT INTO PessoasGarcon
 VALUES
-    (@@IDENTITY, @HrTrab, @Comissao, @Ativo)
+    (@@IDENTITY, @Comissao, @RegimeTrab, @Ativo)
 GO
 
-EXEC sp_garcon_create "Matheus G.", "80808080", "174256399", 12, 1.9, TRUE
+EXEC sp_garcon_create "Matheus G.", "80808080", "174256399", 1000, 1.90, "CLT", TRUE
 GO
 
 ----------------------------------------------------
@@ -298,21 +296,23 @@ CREATE PROC sp_garcon_update
     @Nome VARCHAR(50),
     @CPF VARCHAR(11),
     @Telefone VARCHAR(13),
-    @HrTrab DECIMAL(6,2),
-    @Comissao DECIMAL(6,2),
+    @Salario DECIMAL(6,2),
+    @Comissao DECIMAL(3,2),
+    @RegimeTrab VARCHAR(40),
     @Ativo BIT
 AS
 UPDATE Pessoas SET
     Nome = @Nome,
     CPF = @CPF,
-    Telefone = @Telefone
+    Telefone = @Telefone,
+    Salario = @Salario
     WHERE PessoaId = @PessoaId
 
 DECLARE @GarconId AS INT = @PessoaId
 
 UPDATE PessoasGarcon SET
-    Hrtrab = @HrTrab,
     Comissao = @Comissao,
+    RegimeTrab = @RegimeTrab,
     Ativo = @Ativo
     WHERE GarconId = @GarconId 
 GO
@@ -343,8 +343,9 @@ SELECT P.PessoaId,
     P.Nome,
     P.CPF,
     P.Telefone,
-    PG.HrTrab,
+    P.Salario,
     PG.Comissao,
+    PG.RegimeTrab,
     CASE PG.Ativo
             WHEN 1 THEN 'TRUE'
             ELSE 'FALSE'
@@ -365,8 +366,9 @@ AS
         P.Nome,
         P.CPF,
         P.Telefone,
-        PG.HrTrab,
+        P.Salario,
         PG.Comissao,
+        PG.RegimeTrab,
         CASE PG.Ativo
             WHEN 1 THEN 'TRUE'
             ELSE 'FALSE'

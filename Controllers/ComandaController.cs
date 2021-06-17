@@ -39,6 +39,19 @@ namespace Inter_KissEspataria.Controllers
         [HttpPost]
         public IActionResult Create(Comanda comanda)
         {
+            List<Item> lista = new List<Item>();
+
+            using (var data = new ProdutoData())
+            {
+                Produto produto = data.Read(2);
+
+                Item item = new Item();
+                item.Produto = produto;
+                item.Quantidade = 1;
+                item.Valor = item.Produto.Valor;
+                lista.Add(item);
+            }
+
             using (var data = new ComandaData())
                 data.Create(comanda);
 
