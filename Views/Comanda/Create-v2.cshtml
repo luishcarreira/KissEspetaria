@@ -1,0 +1,41 @@
+﻿@model Comanda
+
+<form asp-controller="Comanda" asp-action="Create" method="post">
+    <label for="AtendenteId">Atendente</label>
+    <select asp-for="AtendenteId" class="form-control">
+        @foreach (var atendente in ViewBag.Atendentes)
+        {
+            <option value="@atendente.PessoaId">@atendente.Nome</option>
+        }
+    </select>
+    </div>
+
+    <div class="col-sm">
+        <label>Garçom</label>
+        <select asp-for="GarconId" class="form-control">
+            @foreach (var garcon in ViewBag.Garçon)
+            {
+                <option value="@garcon.PessoaId">@garcon.Nome</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-sm-6">
+        <label>Emissão</label>
+        <input class="form-control" aria-label="Disabled input example" value=@ViewBag.Data disabled>
+    </div>
+
+    <div class="col-sm">
+        <label>Status</label>
+        <input asp-for="Status" class="form-control" />
+    </div>
+
+    <div class="col-sm-12">
+        <label>Observação</label>
+        <textarea asp-for="Observacao" class="form-control" rows="3"></textarea>
+    </div>
+    </div>
+    <div class="col-sm-12" style="padding-top: 30px;">
+        <button class="btn btn-primary">Salvar</button>
+    </div>
+</form>

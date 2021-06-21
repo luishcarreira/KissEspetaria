@@ -15644,6 +15644,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/Comanda/Create-v2.cshtml",
+      "TargetPath": "Views\\Comanda\\Create-v2.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/PessoaAtendente/Login.cshtml",
       "TargetPath": "Views\\PessoaAtendente\\Login.cshtml",
       "FileKind": "mvc"
@@ -15679,6 +15684,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/Comanda/Create-v1.cshtml",
+      "TargetPath": "Views\\Comanda\\Create-v1.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/Produto/Index.cshtml",
       "TargetPath": "Views\\Produto\\Index.cshtml",
       "FileKind": "mvc"
@@ -15701,11 +15711,6 @@
     {
       "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/Comanda/Index.cshtml",
       "TargetPath": "Views\\Comanda\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/luis/Documentos/Inter_KissEspataria/Views/Comanda/Create.cshtml",
-      "TargetPath": "Views\\Comanda\\Create.cshtml",
       "FileKind": "mvc"
     },
     {

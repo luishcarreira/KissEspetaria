@@ -4,35 +4,78 @@
 
 <div class="row">
 
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
+    <div class="col-xl-6 col-md-6 mb-4">
+        <div class="card border-left-primary shadow">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Earnings (Monthly)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        <div class="text-xs font-weight-bold text-primary mb-1">
+                            Ganhos (Dia)</div>
+                        <div class="h1 mb-0 font-weight-bold text-gray-800">@ViewBag.GetComandasDia</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        <i class="fa fa-sun-o fa-2x" aria-hidden="true"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
+    <div class="col-xl-6 col-md-6 mb-4">
+        <div class="card border-left-success shadow">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Earnings (Annual)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        <div class="text-xs font-weight-bold text-primary mb-1">
+                            Ganhos (Mês)</div>
+                        <div class="h1 mb-0 font-weight-bold text-gray-800">@ViewBag.GetComandasMes</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        <i class="fa fa-calendar-check-o fa-2x" aria-hidden="true"></i>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Comandas ativas *@
+    <div class="container-xl px-4 mt-4">
+        <div class="card mb-4">
+            <div class="card-header">Comandas</div>
+            <div class="card-body p-0">
+                <!-- Billing history table-->
+                <div class="table-responsive table-billing-history">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th class="border-gray-200" scope="col">Id</th>
+                                <th class="border-gray-200" scope="col">Emissão</th>
+                                <th class="border-gray-200" scope="col">Atendente</th>
+                                <th class="border-gray-200" scope="col">Garçom</th>
+                                <th class="border-gray-200" scope="col">Total</th>
+                                <th class="border-gray-200" scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var comanda in @ViewBag.Comandas)
+                            {
+                                <tr>
+                                    <td>@comanda.ComandaId</td>
+                                    <td>@comanda.DataEmissao</td>
+                                    <td>@comanda.Atendente</td>
+                                    <td>@comanda.Garcon</td>
+                                    <td>@comanda.valorTotal</td>
+                                    @if (comanda.Status == "Encerrado")
+                                    {
+                                        <td><span class="badge bg-danger">@comanda.Status</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td><span class="badge bg-sucess">@comanda.Status</span></td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

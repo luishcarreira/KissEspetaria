@@ -142,6 +142,7 @@ namespace Inter_KissEspataria.Data
                 SqlCommand cmd = new SqlCommand("sp_garcon_update", base.connectionDB);
                 cmd.CommandType = CommandType.StoredProcedure;
 
+                cmd.Parameters.AddWithValue("@PessoaId", garcon.PessoaId);
                 cmd.Parameters.AddWithValue("@Nome", garcon.Nome);
                 cmd.Parameters.AddWithValue("@CPF", garcon.CPF);
                 cmd.Parameters.AddWithValue("@Telefone", garcon.Telefone);

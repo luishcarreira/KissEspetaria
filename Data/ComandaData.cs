@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using Inter_KissEspataria.Models;
 
 namespace Inter_KissEspataria.Data
@@ -25,7 +26,7 @@ namespace Inter_KissEspataria.Data
                 //@AtendenteId, @GarconId, @DataEmissao, @Status, @Observacao
                 cmd.Parameters.AddWithValue("@AtendenteId", comanda.AtendenteId);
                 cmd.Parameters.AddWithValue("@GarconId", comanda.GarconId);
-                cmd.Parameters.AddWithValue("@DataEmissao", comanda.DataEmissao);
+                cmd.Parameters.AddWithValue("@DataEmissao", DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
                 cmd.Parameters.AddWithValue("@ValorTotal", comanda.valorTotal);
                 cmd.Parameters.AddWithValue("@Status", comanda.Status);
                 cmd.Parameters.AddWithValue("@Observacao", comanda.Observacao);
@@ -75,9 +76,14 @@ namespace Inter_KissEspataria.Data
                 cmd.CommandText = @"SELECT
                                         c.ComandaId Comanda,
                                         c.AtendenteId Atendente,
+                                        P.Nome 'Nome Atendente',
                                         c.GarconId Garçom,
-                                        c.DataEmissao
-                                    FROM Comandas C";
+                                        P2.Nome 'Nome Garcom',
+                                        c.DataEmissao,
+                                        c.ValorTotal
+                                    FROM Comandas C 
+                                    INNER JOIN Pessoas P ON C.AtendenteId = P.PessoaId
+                                    INNER JOIN Pessoas P2 ON c.GarconId = P2.PessoaId";
 
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -87,8 +93,102 @@ namespace Inter_KissEspataria.Data
 
                     comanda.ComandaId = (int)reader["Comanda"];
                     comanda.AtendenteId = (int)reader["Atendente"];
+                    comanda.Atendente = (String)reader["Nome Atendente"];
                     comanda.GarconId = (int)reader["Garçom"];
-                    comanda.DataEmissao = (DateTime)reader["DataEmissao"];
+                    comanda.Garcon = (String)reader["Nome Garcom"];
+                    comanda.DataEmissao = (String)reader["DataEmissao"];
+                    comanda.valorTotal = (decimal)reader["ValorTotal"];
+
+                    lista.Add(comanda);
+                }
+            }
+            catch (SqlException sqlerror)
+            {
+                Console.WriteLine("Erro: " + sqlerror);
+            }
+
+            return lista;
+        }
+
+        public Decimal GetComandasDia(string dia)
+        {
+            decimal ganho = 0;
+
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("sp_comandas_dia", base.connectionDB);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Dia", dia);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    ganho = (decimal)reader["Ganho"];
+                }
+            }
+            catch (SqlException sqlerror)
+            {
+                Console.WriteLine("Erro: " + sqlerror);
+            }
+
+            return ganho;
+        }
+
+        public Decimal GetComandasMes(string mes)
+        {
+            decimal ganho = 0;
+
+            try
+            {
+
+                SqlCommand cmd = new SqlCommand("sp_comandas_mes", base.connectionDB);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Mes", mes);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    ganho = (decimal)reader["Ganho"];
+                }
+            }
+            catch (SqlException sqlerror)
+            {
+                Console.WriteLine("Erro: " + sqlerror);
+            }
+
+            return ganho;
+        }
+
+        // vw_comanda_status
+        public List<Comanda> ReadComandaStatus()
+        {
+            List<Comanda> lista = new List<Comanda>();
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = base.connectionDB;
+                cmd.CommandText = @"SELECT * FROM vw_comanda_status";
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Comanda comanda = new Comanda();
+
+                    comanda.ComandaId = (int)reader["Comanda"];
+                    comanda.AtendenteId = (int)reader["Atendente"];
+                    comanda.Atendente = (String)reader["Nome Atendente"];
+                    comanda.GarconId = (int)reader["Garçom"];
+                    comanda.Garcon = (String)reader["Nome Garcom"];
+                    comanda.DataEmissao = (String)reader["DataEmissao"];
+                    comanda.valorTotal = (decimal)reader["Total"];
+                    comanda.Status = (string)reader["Status"];
 
                     lista.Add(comanda);
                 }

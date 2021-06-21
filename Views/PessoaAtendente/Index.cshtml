@@ -21,37 +21,48 @@ else
         {
             if (user.Admin == "TRUE")
             {
-                <table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nome</th>
-            <th scope="col">CPF</th>
-            <th scope="col">Telefone</th>
-            <th scope="col">Login</th>
-            <th scope="col">Salario</th>
-            <th scope="col">Administrador</th>
-        </tr>
-    </thead>
-    @foreach (var atendente in Model)
-                    {
-                        <tbody>
-                            <tr>
-                                <td>@atendente.PessoaId</td>
-                                <td>@atendente.Nome</td>
-                                <td>@atendente.CPF</td>
-                                <td>@atendente.Telefone</td>
-                                <td>@atendente.Login</td>
-                                <td>@atendente.Salario</td>
-                                <td>@atendente.Admin</td>
-                                <td>
-                                    <a class="btn btn-sm btn-danger" href="/pessoaatendente/delete/@atendente.PessoaId">Apagar</a>
-                                    <a class="btn btn-sm btn-warning" href="/pessoaatendente/update/@atendente.PessoaId">Editar</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    }
-                </table>
+                <div class="container-xl px-4 mt-4">
+    <div class="card mb-4">
+        <div class="card-header">Atendentes</div>
+        <div class="card-body p-0">
+            <div class="table-responsive table-billing-history">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="border-gray-200" scope="col">Id</th>
+                            <th class="border-gray-200" scope="col">Nome</th>
+                            <th class="border-gray-200" scope="col">CPF</th>
+                            <th class="border-gray-200" scope="col">Telefone</th>
+                            <th class="border-gray-200" scope="col">Login</th>
+                            <th class="border-gray-200" scope="col">Salario</th>
+                            <th class="border-gray-200" scope="col">Administrador</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var atendente in Model)
+                                        {
+                                            <tr>
+                                                <td>@atendente.PessoaId</td>
+                                                <td>@atendente.Nome</td>
+                                                <td>@atendente.CPF</td>
+                                                <td>@atendente.Telefone</td>
+                                                <td>@atendente.Login</td>
+                                                <td>@atendente.Salario</td>
+                                                <td>@atendente.Admin</td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-danger"
+                                    href="/pessoaatendente/delete/@atendente.PessoaId">Apagar</a>
+                                                    <a class="btn btn-sm btn-warning"
+                                    href="/pessoaatendente/update/@atendente.PessoaId">Editar</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <a class="btn btn-primary" href="/pessoaatendente/create">Adicionar</a>
             }
             else

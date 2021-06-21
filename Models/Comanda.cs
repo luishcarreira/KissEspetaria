@@ -2,6 +2,7 @@ using System.Runtime.Serialization;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Inter_KissEspataria.Models
 {
@@ -16,20 +17,22 @@ namespace Inter_KissEspataria.Models
 
         #region Dados do Garçon
         public int? GarconId { get; set; }
-        public string Garçon { get; set; }
+        public string Garcon { get; set; }
         #endregion
 
-        public DateTime DataEmissao { get; set; }
-        public char Status { get; set; }
+        public string DataEmissao { get; set; }
+
+        public string Status { get; set; }
+
         public string Observacao { get; set; }
+
         public List<Item> Itens { get; set; } = new List<Item>();
 
-        public decimal valorTotal
-        {
-            get
-            {
-                return Itens.Sum(i => i.ValorTotal);
-            }
-        }
+        public decimal valorTotal { get; set; }
     }
+}
+
+public enum Status
+{
+
 }

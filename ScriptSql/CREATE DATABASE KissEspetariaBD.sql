@@ -47,7 +47,7 @@ CREATE TABLE Comandas
     ComandaId INT NOT NULL IDENTITY,
     AtendenteId INT NOT NULL,
     GarconId INT NOT NULL,
-    DataEmissao DATE,
+    DataEmissao VARCHAR(12),
     ValorTotal DECIMAL(6,2) NOT NULL,
     Status INT NOT NULL,
     Observacao VARCHAR(MAX),
@@ -142,7 +142,8 @@ UPDATE PessoasAtendente SET
     WHERE AtendenteId = @AtendenteId 
 GO
 
-EXEC sp_atendente_update 1, 'Luis', '46093823857', '190', 1200, 'lhenrique', '123456', TRUE
+use KissEspetariaBD
+EXEC sp_atendente_update 1, 'Luis H.', '46093823857', '190', 1200, 'lhenrique', '123456', TRUE
 go
 ----------------------------------------------------
 --   DELETE                 ------------------------
@@ -461,6 +462,48 @@ INSERT INTO ProdutoComandaItem
 VALUES(@ProdutoId, @ComandaId, @Quantidade, @ValorUnitario)
 GO
 
+
+
+
+--QUERYS P/ DASHBOARD(HOME)
 ----------------------------------------------------
---   BUSCAS P/ ID              ---------------------
+--   GANHOS(DIA)               ---------------------
 ----------------------------------------------------
+CREATE PROC sp_comandas_dia
+    @Dia CHAR(2)
+AS
+SELECT SUM(ValorTotal) Ganho
+FROM Comandas
+WHERE DAY(DataEmissao) = @Dia 
+GO
+
+
+CREATE PROC sp_comandas_mes
+    @Mes CHAR(1)
+AS
+
+SELECT SUM(ValorTotal) Ganho
+FROM Comandas
+WHERE MONTH(DataEmissao) = @Mes
+GO
+
+
+
+CREATE VIEW vw_comanda_status
+AS
+    SELECT
+        c.ComandaId Comanda,
+        c.AtendenteId Atendente,
+        P.Nome 'Nome Atendente',
+        c.GarconId Garçom,
+        P2.Nome 'Nome Garcom',
+        c.DataEmissao,
+        c.ValorTotal Total,
+        CASE [Status]
+            WHEN 1 THEN 'Encerrado'
+            ELSE 'Em Aberto'
+        END Status
+    FROM Comandas C
+        INNER JOIN Pessoas P ON C.AtendenteId = P.PessoaId
+        INNER JOIN Pessoas P2 ON c.GarconId = P2.PessoaId
+GO

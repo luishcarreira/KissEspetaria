@@ -1,4 +1,7 @@
-﻿@model List<PessoaGarcon>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http
+@using System.Text.Json
+@model List<PessoaGarcon>
 
 <br />
 @if (Model == null)
@@ -7,38 +10,107 @@
 }
 else
 {
-    <table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nome</th>
-            <th scope="col">CPF</th>
-            <th scope="col">Telefone</th>
-            <th scope="col">Salario</th>
-            <th scope="col">Comissão</th>
-            <th scope="col">Regime Trab.</th>
-            <th scope="col">Ativo</th>
-        </tr>
-    </thead>
-    @foreach (var garcon in Model)
+
+    string json = HttpContextAccessor.HttpContext.Session.GetString("user");
+
+    if (json != null)
+    {
+        PessoaAtendente user = JsonSerializer.Deserialize<PessoaAtendente>(json);
+
+        if (user != null)
         {
-            <tbody>
-                <tr>
-                    <td>@garcon.PessoaId</td>
-                    <td>@garcon.Nome</td>
-                    <td>@garcon.CPF</td>
-                    <td>@garcon.Telefone</td>
-                    <td>@garcon.Salario</td>
-                    <td>@garcon.Comissao/td>
-                    <td>@garcon.RegimeTrab/td>
-                    <td>@garcon.Ativo</td>
-                    <td>
-                        <a class="btn btn-sm btn-danger" href="/pessoagarcon/delete/@garcon.PessoaId">Apagar</a>
-                        <a class="btn btn-sm btn-warning" href="/pessoagarcon/update/@garcon.PessoaId">Editar</a>
-                    </td>
-                </tr>
-            </tbody>
+            if (user.Admin == "TRUE")
+            {
+                <div class="container-xl px-4 mt-4">
+    <div class="card mb-4">
+        <div class="card-header">Garçons</div>
+        <div class="card-body p-0">
+            <div class="table-responsive table-billing-history">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="border-gray-200" scope="col">Id</th>
+                            <th class="border-gray-200" scope="col">Nome</th>
+                            <th class="border-gray-200" scope="col">CPF</th>
+                            <th class="border-gray-200" scope="col">Telefone</th>
+                            <th class="border-gray-200" scope="col">Salario</th>
+                            <th class="border-gray-200" scope="col">Comissão</th>
+                            <th class="border-gray-200" scope="col">Regime Trab.</th>
+                            <th class="border-gray-200" scope="col">Ativo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var garcon in Model)
+                                        {
+                                        <tbody>
+                                            <tr>
+                                                <td>@garcon.PessoaId</td>
+                                                <td>@garcon.Nome</td>
+                                                <td>@garcon.CPF</td>
+                                                <td>@garcon.Telefone</td>
+                                                <td>@garcon.Salario</td>
+                                                <td>@((double)garcon.Comissao)</td>
+                                                <td>@garcon.RegimeTrab</td>
+                                                <td>@garcon.Ativo</td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-danger" href="/pessoagarcon/delete/@garcon.PessoaId">Apagar</a>
+                                                    <a class="btn btn-sm btn-warning"
+                                    href="/pessoagarcon/update/@garcon.PessoaId">Editar</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-primary" href="/pessoagarcon/create">Adicionar</a>
+            }
+            else
+            {
+                <div class="container-xl px-4 mt-4">
+    <div class="card mb-4">
+        <div class="card-header">Garçons</div>
+        <div class="card-body p-0">
+            <div class="table-responsive table-billing-history">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="border-gray-200" scope="col">Id</th>
+                            <th class="border-gray-200" scope="col">Nome</th>
+                            <th class="border-gray-200" scope="col">CPF</th>
+                            <th class="border-gray-200" scope="col">Telefone</th>
+                            <th class="border-gray-200" scope="col">Salario</th>
+                            <th class="border-gray-200" scope="col">Comissão</th>
+                            <th class="border-gray-200" scope="col">Regime Trab.</th>
+                            <th class="border-gray-200" scope="col">Ativo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var garcon in Model)
+                                        {
+                                        <tbody>
+                                            <tr>
+                                                <td>@garcon.PessoaId</td>
+                                                <td>@garcon.Nome</td>
+                                                <td>@garcon.CPF</td>
+                                                <td>@garcon.Telefone</td>
+                                                <td>@garcon.Salario</td>
+                                                <td>@((double)garcon.Comissao)</td>
+                                                <td>@garcon.RegimeTrab</td>
+                                                <td>@garcon.Ativo</td>
+                                            </tr>
+                                        </tbody>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         }
-    </table>
+    }
 }
-<a class="btn btn-primary" href="/pessoagarcon/create">Adicionar</a>

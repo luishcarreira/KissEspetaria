@@ -7,31 +7,41 @@
 }
 else
 {
-    <table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Atendente</th>
-            <th scope="col">Garçom</th>
-            <th scope="col">Data Emissão</th>
-            <th scope="col">Valor Total</th>
-        </tr>
-    </thead>
-    @foreach (var comanda in Model)
-        {
-            <tbody>
-                <tr>
-                    <td>@comanda.ComandaId</td>
-                    <td>@comanda.AtendenteId</td>
-                    <td>@comanda.GarconId</td>
-                    <td>@comanda.DataEmissao</td>
-                    <td>@comanda.valorTotal</td>
-                    <td>
-                        <a class="btn btn-sm btn-info" href="/comanda/detalhes/">Ver</a>
-                    </td>
-                </tr>
-            </tbody>
-        }
-    </table>
+    <div class="container-xl px-4 mt-4">
+    <div class="card mb-4">
+        <div class="card-header">Comandas</div>
+        <div class="card-body p-0">
+            <div class="table-responsive table-billing-history">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="border-gray-200" scope="col">Id</th>
+                            <th class="border-gray-200" scope="col">Atendente</th>
+                            <th class="border-gray-200" scope="col">Nome</th>
+                            <th class="border-gray-200" scope="col">Garçom</th>
+                            <th class="border-gray-200" scope="col">Nome</th>
+                            <th class="border-gray-200" scope="col">Data Emissão</th>
+                            <th class="border-gray-200" scope="col">Valor Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var comanda in Model)
+                            {
+                                <tr>
+                                    <td>@comanda.ComandaId</td>
+                                    <td>@comanda.AtendenteId</td>
+                                    <td>@comanda.Atendente</td>
+                                    <td>@comanda.GarconId</td>
+                                    <td>@comanda.Garcon</td>
+                                    <td>@comanda.DataEmissao</td>
+                                    <td>@comanda.valorTotal</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 }
-<a class="btn btn-primary" href="/comanda/create">Adicionar</a>
+<a class="btn btn-primary" href="/comanda/create-v2">Adicionar</a>
