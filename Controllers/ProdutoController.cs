@@ -37,7 +37,7 @@ namespace Inter_KissEspataria.Controllers
             using (var data = new ProdutoData())
                 data.Delete(id);
 
-            return RedirectToAction("Index", "");
+            return RedirectToAction("Index", "Produto");
         }
 
         [HttpGet]
@@ -58,7 +58,7 @@ namespace Inter_KissEspataria.Controllers
             using (var data = new ProdutoData())
                 data.Update(produto);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Produto");
         }
     }
 }

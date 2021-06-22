@@ -159,7 +159,7 @@ namespace Inter_KissEspataria.Data
             }
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
             try
             {
@@ -169,10 +169,14 @@ namespace Inter_KissEspataria.Data
                 cmd.Parameters.AddWithValue("@GarconId", id);
 
                 cmd.ExecuteNonQuery();
+
+                return true;
             }
             catch (SqlException sqlerror)
             {
                 Console.WriteLine("Erro: " + sqlerror);
+
+                return false;
             }
         }
     }

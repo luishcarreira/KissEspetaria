@@ -55,5 +55,6 @@
 /home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/PessoaGarcon/Update.cshtml.g.cs
 /home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/Produto/Update.cshtml.g.cs
 /home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/Comanda/Index.cshtml.g.cs
-/home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/Comanda/Create-v1.cshtml.g.cs
-/home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/Comanda/Create-v2.cshtml.g.cs
+/home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/Comanda/Createv2.cshtml.g.cs
+/home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/Comanda/Create.cshtml.g.cs
+/home/luis/Documentos/Inter_KissEspataria/obj/Debug/net5.0/Razor/Views/Comanda/VerComanda.cshtml.g.cs

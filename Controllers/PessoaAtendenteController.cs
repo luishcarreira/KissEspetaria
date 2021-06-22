@@ -101,7 +101,7 @@ namespace Inter_KissEspataria.Controllers
             using (var data = new PessoaAtendenteData())
                 data.Delete(id);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "PessoaAtendente");
         }
 
         [HttpGet]
@@ -122,7 +122,7 @@ namespace Inter_KissEspataria.Controllers
             using (var data = new PessoaAtendenteData())
                 data.Update(atendente);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "PessoaAtendente");
         }
 
         [HttpGet]
@@ -152,6 +152,16 @@ namespace Inter_KissEspataria.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        [HttpGet]
+        public IActionResult Sair()
+        {
+
+            HttpContext.Session.Remove("user");
+
+            return RedirectToAction("Login", "PessoaAtendente");
+
         }
     }
 }

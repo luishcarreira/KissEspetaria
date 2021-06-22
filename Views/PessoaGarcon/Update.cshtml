@@ -1,6 +1,6 @@
 ﻿@model PessoaGarcon
 
-<form asp-controller="PessoaGarcon" asp-action="Update" method="POST">
+<form asp-controller="PessoaGarcon" asp-action="Update" method="POST" class="row g-3">
     <div class="col-sm-7">
         <label asp-for="Nome"></label>
         <input asp-for="Nome" class="form-control" />
@@ -44,5 +44,7 @@
         </select>
     </div>
 
-    <button class="btn btn-primary">Atualizar</button>
+    <div class="col-sm-12" style="padding-top: 10px;">
+        <button class="btn btn-primary">Atualizar</button>
+    </div>
 </form>

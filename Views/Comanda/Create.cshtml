@@ -1,0 +1,222 @@
+﻿@model Comanda
+
+<form asp-controller="Comanda" asp-action="Create" method="post">
+
+    <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">Comanda</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#perfil" role="tab" aria-controls="profile"
+                aria-selected="false">Itens</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="row g-3" style="padding-top: 20px;">
+                <div class="col-sm-6">
+                    <label for="AtendenteId">Atendente</label>
+                    <select asp-for="AtendenteId" class="form-control">
+                        @foreach (var atendente in ViewBag.Atendentes)
+                        {
+                            <option value="@atendente.PessoaId">@atendente.Nome</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-sm">
+                    <label>Garçom</label>
+                    <select asp-for="GarconId" class="form-control">
+                        @foreach (var garcon in ViewBag.Garçon)
+                        {
+                            <option value="@garcon.PessoaId">@garcon.Nome</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-sm-6">
+                    <label>Emissão</label>
+                    <input class="form-control" aria-label="Disabled input example" value=@ViewBag.Data disabled>
+                </div>
+
+                <div class="col-sm">
+                    <label for="Status">Status</label>
+                    <select asp-for="Status" class="form-control">
+                        <option value="0">Em Aberto</option>
+                        <option value="1">Encerrado</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-12">
+                    <label>Observação</label>
+                    <textarea asp-for="Observacao" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+
+        </div>
+        <div class="tab-pane fade" id="perfil" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="row g-3" style="padding-top: 20px;">
+
+
+                <div class="col-sm-6">
+                    <label>Produto</label>
+                    <select class="form-control" id="produto-select">
+                        @foreach (var produto in ViewBag.Produto)
+                        {
+                            <option data-id="@produto.ProdutoId" data-valor="@produto.Valor">@produto.Descricao</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-sm">
+                    <label>Quantidade</label>
+                    <input class="form-control" id="qtd-select" />
+                </div>
+
+                <div class="col-sm" style="padding-top: 30px;">
+                    <input type="button" value="Add" onclick="AddTableRow()" />
+                </div>
+
+                <table class="table table-hover" id="minhaTabela">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Produto</th>
+                            <th scope="col">Qtd</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="col-sm-12" style="padding-top: 30px;">
+                    <input type="submit" value="carregar" class="btn btn-primary">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript" src="~/lib/jquery/dist/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+
+    (function ($) {
+        AddTableRow = function () {
+
+            var newRow = $("<tr>");
+            var cols = "";
+
+            var table = document.getElementById("minhaTabela");
+            // Captura a quantidade de linhas já existentes na tabela
+            var numOfRows = table.rows.length;
+
+            var produto = document.getElementById("produto-select");
+            var qtd = document.getElementById("qtd-select");
+
+            var produtoview = produto.value;
+            var selected = produto.options[produto.selectedIndex];
+            var idProduto = selected.getAttribute('data-id');
+            var valor = selected.getAttribute('data-valor');
+
+            var valorFormat = parseFloat(valor.replace(',', '.'));
+
+            cols += '<td class="linhas">' + numOfRows + '</td>';
+            cols += '<td class="produto">' + produtoview + '</td>';
+            cols += '<td class="qtd">' + qtd.value + '</td>';
+            cols += '<td class="valor">' + valorFormat + '</td>';
+            cols += '<td>';
+            cols += '<button onclick="RemoveTableRow(this)" type="button">Remover</button>';
+            cols += '</td>';
+
+            newRow.append(cols);
+            $("#minhaTabela").append(newRow);
+
+            return false;
+        };
+
+        $(document).on('click', '.btn btn-primary', function (e) {
+            e.preventDefault;
+
+            var items = [];
+
+            var linhas = $(this).parent().parent().find(".linhas").text();
+            var produto = $(this).parent().parent().find(".produto").text();
+            var qtd = $(this).parent().parent().find(".qtd").text();
+            var valor = $(this).parent().parent().find(".valor").text();
+
+            items.push({
+                ComandaId: linhas,
+                Produto: produto,
+                Quantidade: qtd,
+                Valor: valor,
+            });
+
+            alert(JSON.stringify(items));
+
+            if (array.length > 0) {
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '@Url.Action("Create")',
+                    data: JSON.stringify(items),
+                    success: function (result) {
+                        window.location.href = result.url;
+                    },
+                    error: function (ex) {
+                    }
+                });
+            }
+            else {
+                alert('No items selected.');
+            }
+        });
+
+        /*EnviarLista = function () {
+
+
+
+            /*var items = [];
+
+            $('#table > tbody > tr').each(function () {
+                var $tr = $(this);
+                //variaveis da tabela
+                var id = $tr.find('td[data-linhas]').data('linhas');
+                var produto = $tr.attr('id');
+                var qtd = $tr.find('[qtd]').val();
+                var valor = $tr.find('[valor]').val();
+                items.push({
+                    ComandaId: id,
+                    Produto: produto,
+                    Quantidade: qtd,
+                    Valor: valor,
+                });
+            });
+
+            alert(JSON.stringify(items));
+
+            if (array.length > 0) {
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '@Url.Action("Create","Comanda")',
+                    data: JSON.stringify(items),
+                    success: function (result) {
+                        window.location.href = result.url;
+                    },
+                    error: function (ex) {
+                    }
+                });
+            }
+            else {
+                alert('No items selected.');
+            }
+        };*/
+    })(jQuery);
+</script>

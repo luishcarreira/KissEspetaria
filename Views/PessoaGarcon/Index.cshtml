@@ -11,6 +11,16 @@
 else
 {
 
+    @if (@TempData["deleteSucesso"] != null)
+    {
+        <div class="alert alert-success">@TempData["deleteSucesso"]</div>
+    }
+
+    @if (@TempData["deleteErro"] != null)
+    {
+        <div class="alert alert-danger">@TempData["deleteErro"]</div>
+    }
+
     string json = HttpContextAccessor.HttpContext.Session.GetString("user");
 
     if (json != null)

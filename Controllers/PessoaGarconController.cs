@@ -1,5 +1,7 @@
+using System.Text.Json;
 using Inter_KissEspataria.Data;
 using Inter_KissEspataria.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inter_KissEspataria.Controllers
@@ -35,9 +37,23 @@ namespace Inter_KissEspataria.Controllers
         public IActionResult Delete(int id)
         {
             using (var data = new PessoaGarconData())
+            {
+                bool exclusao = data.Delete(id);
+
+                if (exclusao == true)
+                {
+                    TempData["deleteSucesso"] = "A Exclusão foi realizada com sucesso";
+                }
+                else
+                {
+                    TempData["deleteErro"] = "A Exclusão falhou, pode haver alguma comanda atrelada com o ID deste garçom";
+                }
+            }
+
+            using (var data = new PessoaGarconData())
                 data.Delete(id);
 
-            return RedirectToAction("Index", "");
+            return RedirectToAction("Index", "PessoaGarcon");
         }
 
         [HttpGet]
@@ -58,7 +74,7 @@ namespace Inter_KissEspataria.Controllers
             using (var data = new PessoaGarconData())
                 data.Update(garcon);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "PessoaGarcon");
         }
     }
 }
